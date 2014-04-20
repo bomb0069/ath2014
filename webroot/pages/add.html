@@ -1,7 +1,7 @@
+<form name="topicForm" ng-submit="submitForm(topicForm.$valid)" novalidate>
 <h1>เสนอหัวข้อ</h1>
 <div class="row">
   <div class="col-md-12">
-    <form name="topicForm" ng-submit="submitForm(topicForm.$valid)" novalidate>
       <div class="form-group">
         <label>Title</label>
         <input type="text" name="title" placeholder="ชื่อหัวข้อ" class="form-control" ng-model="title" ng-keyup="generatePermalink()" required>
@@ -10,12 +10,25 @@
         <label>Permalink</label>
         <input type="text" name="permalink" placeholder="ลิงก์หัวข้อ" class="form-control" ng-model="permalink" required>
       </div>
-      <div class="form-group">
-        <label>รายละเอียด (markdown)</label>
-        <textarea name="description" rows="20" style="border: 1px solid #ccc" ng-model="description" ui-codemirror required></textarea>
-      </div>
-
-      <button type=submit" class="btn btn-primary">Submit</button>
-    </form> 
   </div>
 </div>
+<div class="row">
+  <div class="col-md-6">
+     <div class="form-group">
+        <label>รายละเอียด (markdown)</label>
+        <textarea name="description" rows="20" style="border: 1px solid #ccc; height:300px" ng-model="description" ui-codemirror required ng-keyup="generatePreview()"></textarea>
+     </div>
+  </div>
+  <div class="col-md-6">
+     <label>Preview</label>
+     <div style="border: 1px solid #ccc; height:300px" ng-bind-html="preview"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+     <div class="form-group">
+      <button type=submit" class="btn btn-primary">Submit</button>
+     </div>
+  </div>
+</div>
+</form> 
