@@ -2,13 +2,16 @@
 <h1>เสนอหัวข้อ</h1>
 <div class="row">
   <div class="col-md-12">
-      <div class="form-group">
+      <div class="form-group" ng-class="{'has-error':topicForm.title.$invalid}">
         <label>Title</label>
-        <input type="text" name="title" placeholder="ชื่อหัวข้อ" class="form-control" ng-model="title" ng-keyup="generatePermalink()" required>
+        <input type="text" name="title" placeholder="ชื่อหัวข้อ" class="form-control" ng-model="title" ng-keyup="generatePermalink()" required >
+        <p ng-show="topicForm.title.$invalid" class="help-block">title is required</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-class="{'has-error':topicForm.permalink.$invalid}">
         <label>Permalink</label>
-        <input type="text" name="permalink" placeholder="ลิงก์หัวข้อ" class="form-control" ng-model="permalink" required>
+        <input type="text" name="permalink" placeholder="ลิงก์หัวข้อ" class="form-control" ng-model="permalink" required ng-pattern="/[A-Za-z0-9]+/">
+        <p ng-show="topicForm.permalink.$error.required" class="help-block">permalink is required</p>
+        <p ng-show="topicForm.permalink.$error.pattern" class="help-block">Valid permalink is only [A-Za-z0-9-]+</p>
       </div>
   </div>
 </div>

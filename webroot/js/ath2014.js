@@ -59,6 +59,12 @@ app.controller("topicAddController", function($scope, $location) {
   $scope.description = '';
   $scope.preview = '';
 
+  $scope.submitForm = function(isValid) {
+    if (isValid) {
+      console.log($scope.title)
+    }
+  }
+
   $scope.generatePermalink = function() {
     if($scope.title != undefined && $scope.title.length > 0) {
       $scope.permalink = $scope.title.replace(/[^a-z0-9]+/gi, '-').replace(/^-*|-*$/g, '').toLowerCase();
