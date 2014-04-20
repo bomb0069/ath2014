@@ -36,7 +36,7 @@ function getScore(http, collector, topic) {
       "likes":  data[0]["like_count"]
     });
 
-    collector.sort( function(a,b) { return a.likes - b.likes; } );
+    collector.sort( function(a,b) { return b.likes - a.likes; } );
   });
 }
 
