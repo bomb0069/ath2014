@@ -1,4 +1,4 @@
-var app = angular.module("ath2014", ['ngRoute', 'ezfb', 'ui.codemirror']);
+var app = angular.module("ath2014", ['ngRoute', 'ezfb', 'ui.codemirror','ngSanitize']);
 
 app.config(function(ezfbProvider) {
   ezfbProvider.setInitParams({
@@ -56,12 +56,22 @@ app.controller("topicController", function($scope, $location, $routeParams) {
 app.controller("topicAddController", function($scope, $location) {
   $scope.title = '';
   $scope.permalink = '';  
+  $scope.description = '';
+  $scope.preview = '';
 
   $scope.generatePermalink = function() {
     if($scope.title != undefined && $scope.title.length > 0) {
       $scope.permalink = $scope.title.replace(/[^a-z0-9]+/gi, '-').replace(/^-*|-*$/g, '').toLowerCase();
     } else {
       $scope.permalink = "";
+    }
+  }
+
+  $scope.generatePreview = function() {
+    if($scope.description != undefined)  {
+      $scope.preview = marked($scope.description);
+    } else { 
+      $scope.preview = ''
     }
   } 
 });
