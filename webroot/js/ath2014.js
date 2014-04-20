@@ -1,4 +1,4 @@
-var app = angular.module("ath2014", ['ngRoute', 'ezfb']);
+var app = angular.module("ath2014", ['ngRoute', 'ezfb', 'ui.codemirror']);
 
 app.config(function(ezfbProvider) {
   ezfbProvider.setInitParams({
@@ -8,6 +8,10 @@ app.config(function(ezfbProvider) {
 
 app.config(function($routeProvider, $locationProvider) {
   $routeProvider
+    .when('/topic/create', {
+      templateUrl: '/pages/add.html',
+      controller: 'topicAddController'
+    })
     .when('/topic/:permalink', {
       templateUrl: '/pages/topic.html',
       controller: 'topicController'
@@ -47,7 +51,17 @@ app.controller("homeController", function($scope, $http, $routeParams) {
 app.controller("topicController", function($scope, $location, $routeParams) {
   $scope.permalink = $routeParams.permalink;
   $scope.url = $location.absUrl();
+});
 
-  console.log($scope.url);
+app.controller("topicAddController", function($scope, $location) {
+  $scope.title = '';
+  $scope.permalink = '';  
 
+  $scope.generatePermalink = function() {
+    if($scope.title != undefined && $scope.title.length > 0) {
+      $scope.permalink = $scope.title.replace(/[^a-z0-9]+/gi, '-').replace(/^-*|-*$/g, '').toLowerCase();
+    } else {
+      $scope.permalink = "";
+    }
+  } 
 });
