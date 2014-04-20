@@ -43,3 +43,10 @@ func (d *DataAccess) GetTopics() []Topic {
 	})
 	return result
 }
+
+func (d *DataAccess) UpdateTopic(topic Topic) {
+	runInSession(func(db *mgo.Database) {
+		err := db.C("topics").Update(bson.M{"permalink": topic.Permalink}, topic)
+		panicOn("Cannot update ", err)
+	})
+}

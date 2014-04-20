@@ -21,3 +21,7 @@ func (c Controller) GetTopics() []byte {
 	json, _ := json.Marshal(topics)
 	return json
 }
+
+func (c Controller) UpdateTopic(topic Topic) {
+	c.dataAccess.UpdateTopic(topic)
+}

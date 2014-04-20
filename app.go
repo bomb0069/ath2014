@@ -31,6 +31,11 @@ func topics(w http.ResponseWriter, r *http.Request) {
 		body, _ := ioutil.ReadAll(r.Body)
 		json.Unmarshal(body, &topic)
 		controller.InsertTopic(topic)
+	case "PUT":
+		topic := lib.Topic {}
+		body, _ := ioutil.ReadAll(r.Body)
+		json.Unmarshal(body, &topic)
+		controller.UpdateTopic(topic)
 	case "GET":
 		w.Write(controller.GetTopics())
 	}
