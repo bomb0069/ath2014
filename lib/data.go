@@ -11,6 +11,11 @@ type Topic struct {
 	Description string
 }
 
+type TopicShort struct {
+  Title string
+  Permalink string
+}
+
 type DataAccess struct {
 }
 
@@ -35,8 +40,8 @@ func (d *DataAccess) InsertTopic(t Topic) {
 	})
 }
 
-func (d *DataAccess) GetTopics() []Topic {
-	result := []Topic{}
+func (d *DataAccess) GetTopics() []TopicShort {
+	result := []TopicShort{}
 	runInSession(func(db *mgo.Database) {
 		err := db.C("topics").Find(bson.M{}).All(&result)
 		panicOn("Cannot find element", err)
