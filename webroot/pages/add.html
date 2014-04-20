@@ -19,11 +19,11 @@
   <div class="col-md-6">
      <div class="form-group">
         <label>รายละเอียด (markdown)</label>
-        <textarea name="description" rows="20" style="border: 1px solid #ccc; height:300px" ng-model="description" ui-codemirror ng-keyup="generatePreview()"></textarea>
+        <div name="description" rows="20" style="border: 1px solid #ccc; height:300px" ng-model="description" ui-codemirror></div>
      </div>
   </div>
   <div class="col-md-6">
-     <label>Preview</label>
+     <label>Preview (<a ng-click="generatePreview()">Update Preview</a>)</label>
      <div style="border: 1px solid #ccc; height:300px" ng-bind-html="preview"></div>
   </div>
 </div>
