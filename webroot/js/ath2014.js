@@ -53,15 +53,20 @@ app.controller("topicController", function($scope, $location, $routeParams) {
   $scope.url = $location.absUrl();
 });
 
-app.controller("topicAddController", function($scope, $location) {
+app.controller("topicAddController", function($scope, $location, $http) {
   $scope.title = '';
   $scope.permalink = '';  
   $scope.description = '';
   $scope.preview = '';
+  $scope.enableSubmit = true;
 
   $scope.submitForm = function(isValid) {
     if (isValid) {
-      console.log($scope.title)
+      request = { "Title": $scope.title, "Permalinnk": $scope.permalink, "Description": $scope.description };
+      $scope.enableSubmit = false;
+      $http.post("/api/topics", request)
+        .success(function() { $location.path('/'); })
+        .error(function() { alert("error adding new topic"); $scope.enableSubmit=true; });
     }
   }
 
