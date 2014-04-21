@@ -2,14 +2,16 @@ package main
 
 import (
 	"./lib"
-	"log"
-	"net/http"
 	"encoding/json"
 	"io/ioutil"
+	"log"
+	"net/http"
+	"strings"
 )
 
 func main() {
 	http.Handle("/", http.FileServer(http.Dir("./webroot")))
+	http.HandleFunc("/api/topic/", topic)
 	http.HandleFunc("/api/topics", topics)
 	http.HandleFunc("/topic/", serveIndex)
 	log.Println("Listening...")
@@ -23,16 +25,22 @@ func serveIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./webroot/index.html")
 }
 
+func topic(w http.ResponseWriter, r *http.Request) {
+	permalink := strings.TrimLeft(r.URL.Path, "/api/topic/")
+	controller := lib.Controller{}
+	w.Write(controller.GetTopic(permalink))
+}
+
 func topics(w http.ResponseWriter, r *http.Request) {
 	controller := lib.Controller{}
 	switch r.Method {
 	case "POST":
-		topic := lib.Topic {}
+		topic := lib.Topic{}
 		body, _ := ioutil.ReadAll(r.Body)
 		json.Unmarshal(body, &topic)
 		controller.InsertTopic(topic)
 	case "PUT":
-		topic := lib.Topic {}
+		topic := lib.Topic{}
 		body, _ := ioutil.ReadAll(r.Body)
 		json.Unmarshal(body, &topic)
 		controller.UpdateTopic(topic)

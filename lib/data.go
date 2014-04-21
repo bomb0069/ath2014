@@ -12,8 +12,8 @@ type Topic struct {
 }
 
 type TopicShort struct {
-  Title string
-  Permalink string
+	Title     string
+	Permalink string
 }
 
 type DataAccess struct {
@@ -38,6 +38,20 @@ func (d *DataAccess) InsertTopic(t Topic) {
 		err := db.C("topics").Insert(t)
 		panicOn("Cannot Insert", err)
 	})
+}
+
+func (d *DataAccess) GetTopic(permalink string) Topic {
+	result := Topic{}
+	defer func() {
+		if r := recover(); r != nil {
+			println("recover")
+		}
+	}()
+	runInSession(func(db *mgo.Database) {
+		err := db.C("topics").Find(bson.M{"permalink": permalink}).One(&result)
+		panicOn("Cannot find permalink", err)
+	})
+	return result
 }
 
 func (d *DataAccess) GetTopics() []TopicShort {
